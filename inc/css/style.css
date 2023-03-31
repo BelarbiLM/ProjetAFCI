@@ -1,0 +1,691 @@
+/* global
+-------------------------------------------------- 
+-------------------------------------------------- 
+-------------------------------------------------- */
+a{
+    color: black;
+    text-decoration: none;
+}
+.hidden{
+    display: none;
+}
+.banner{
+    margin-top: 2%;
+    padding: 0.5%;
+    background-color: #787878;
+    text-align: center;
+}
+@media (max-width: 770px) {
+    .banner {
+        margin-top: 3.5%;
+        padding: 1.5%;
+    }
+}
+@media (max-width: 425px) {
+    .banner {
+        margin-top: 5%;
+        padding: 2%;
+    }
+}
+/* inc
+-------------------------------------------------- 
+-------------------------------------------------- 
+-------------------------------------------------- */
+/* header
+-------------------------------------------------- */
+header {
+    background-color: #44566c;
+}
+.form-control-dark {
+    border-color: var(--bs-gray);
+}
+.form-control-dark:focus {
+    border-color: #fff;
+    box-shadow: 0 0 0 .25rem rgba(255, 255, 255, .25);
+}
+.container img {
+    width: 55%;
+}
+.bi-basket {
+    margin-left: 2%;
+}
+.bi-search, .bi-basket{
+    font-size: 127%;
+    cursor: pointer;
+}
+.form-control {
+    background-color: transparent;
+}
+/*basket*/
+.offcanvas button {
+    border-radius: 15px;
+}
+.offcanvas .bi-x-circle {
+    font-size: 130%;
+    cursor: pointer;
+}
+.basket-close {
+    background-color: #2f435e;
+}
+.basket-title {
+    margin-top: 5%;
+    color: white;
+    background-color: #44566c;
+}
+.basket-product {
+    overflow: scroll;
+}
+.btn-full-1 {
+    width: 250px;
+}
+/* footer
+-------------------------------------------------- */
+footer{
+    padding: 2rem;
+    color: white;
+    background-color: #2f435e;
+}
+footer div {
+    padding: 1rem;
+}
+footer img {
+    width: 45%;
+}
+.footer-zone{
+    width: 50%;
+}
+.footer-zone a{
+    margin: 1.5%;
+}
+@media (max-width: 450px) {
+    footer ul {
+        margin: auto;
+    }
+}
+@media (max-width: 425px) {
+    footer {
+        padding: 0.5rem;
+    }
+    .footer-zone a {
+        margin: 4.5%;
+    }
+}
+/* sidebar (Bootstrap)
+-------------------------------------------------- */
+.sidebar {
+position: fixed;
+top: 0;
+bottom: 0;
+left: 0;
+z-index: 100; /* Behind the navbar */
+padding: 0 0 0; /* Height of navbar */ /*modif léo*/
+box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+}
+@media (max-width: 768px) { /*ajout perso pour responsive*/
+    .sidebar {
+        position: initial;
+    }
+    .sidebar hr.mb-5 {
+        margin-bottom: 0; /*!!!!!!!!!!!!!!!!!!!!!!!!!!! ne marche pas*/
+    }
+    .sidebar .nav {
+        flex-direction: initial; /*!!!!!!!!!!!!!!!!!!!!!!!!!!! ne marche pas*/
+        justify-content: center;
+    }
+}
+.sidebar .nav { 
+    flex-direction: column;/*!!!!!!!!!!!!!!!!!!!!!!!!!!! ne marche pas*/
+}
+.sidebar .nav-link {
+font-weight: 500;
+color: #333;
+}
+.sidebar .nav-link .feather {
+margin-right: 4px;
+color: #727272;
+}
+.sidebar .nav-link.active {
+color: #2470dc;
+}
+.sidebar .nav-link:hover .feather,
+.sidebar .nav-link.active .feather {
+color: inherit;
+}
+.sidebar-heading {
+font-size: .75rem;
+}
+
+/* public
+-------------------------------------------------- 
+-------------------------------------------------- 
+-------------------------------------------------- */
+/* home (Bootstrap)
+-------------------------------------------------- */
+.carousel {
+    margin-bottom: 4rem;
+}
+.carousel-caption {/* Since positioning the image, we need to help out the caption */
+    bottom: 3rem;
+    z-index: 10;
+    display: flex;
+    text-align: end;
+}
+.carousel-caption div{
+    width: 50%;
+}
+.carousel-item {/* Declare heights because of positioning of img element */
+    height: 27rem;
+}
+.marketing .col-lg-4 {/* Center align the text within the three columns below the carousel */
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+.marketing .col-lg-4 p {
+    margin-right: .75rem;
+    margin-left: .75rem;
+}
+.marketing h1 { 
+    margin-bottom: 3rem;
+}
+.featurette-divider {/* Space out the Bootstrap <hr> more */
+    margin: 3rem 0; 
+}
+.featurette-heading {/* Thin out the marketing headings */
+    letter-spacing: -.05rem;
+}
+.featurette .col-md-7 {/*ajout perso pour placer les textes a droite*/
+    width: 100%;
+}
+@media (min-width: 40em) {
+    .carousel-caption p {/* Bump up size of carousel content */
+        margin-bottom: 1.25rem;
+        font-size: 1.25rem;
+        line-height: 1.4;
+    }
+    .featurette-heading {
+        font-size: 50px;
+    }
+}
+@media (max-width: 600px) {
+    .carousel-caption {
+        flex-direction: column;
+        text-align: center;
+    }
+    .carousel-caption div{
+        width: 100%;
+    }
+    .carousel-item {
+        height: 32rem;
+    }
+}
+/* about 
+-------------------------------------------------- */
+.about-div p, .about-div h3 {
+    margin: 2.5%;
+}
+@media (max-width: 325px) {
+    .about-div p, .about-div h3{
+        margin: 5%;
+    }
+}
+/* obligations
+-------------------------------------------------- */
+.legal-obligations {
+    max-height: 500px;
+    margin-bottom: 4%;
+    margin-top: 3%;
+}
+.legal-obligations-menu {
+    width: 25%;
+    border-right: 2px solid black;
+}
+.legal-obligations-menu ul {
+    margin-top: 2rem;
+}
+.legal-obligations-description {
+    width: 75%;
+    padding: 1rem;
+    overflow: scroll;
+}
+.legal-obligations-menu li {
+    margin: 3%;
+    font-size: 1.2em;
+    cursor: pointer;
+}
+@media (max-width: 770px) {
+    .legal-obligations {
+        flex-direction: column;
+        max-height: 100%;
+        margin: 0;
+    }
+    .legal-obligations-menu {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        border: none;
+    }
+    .legal-obligations-menu ul {
+        display: flex;
+    }
+    .legal-obligations-description {
+        width: 100%;
+        padding: 1rem;
+        overflow: scroll;
+        text-align: center;
+    }
+}
+@media (max-width: 500px) {
+    .legal-obligations-menu ul {
+        flex-direction: column-reverse;
+    }
+}
+/* delivery
+-------------------------------------------------- */
+.delivery-zone {
+    background-color: #ececec;
+    line-height: 2rem;
+    border: 1px solid #000000;
+    border-radius: 10px;
+}
+.delivery-zone h3 {
+    padding: 2.5%;
+}
+.delivery-titre {
+    font-weight: 600;
+}
+/* contact
+-------------------------------------------------- */
+.contact .banner{
+    margin-bottom: 4%;
+}
+.contact-detail-1 {
+    display: flex;
+    align-items: baseline;
+}
+.contact-detail-2 {
+    display: flex;
+    align-items: baseline;
+    justify-content: flex-end;
+}
+.contact-detail-2-right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+.contact-detail-1 i {
+    font-size: 230%;
+    margin-left: 2%;
+}
+.contact-detail-2 i {
+    font-size: 230%;
+    margin-right: 2%;
+}
+.contact-detail-2-right i {
+    font-size: 270%;
+    margin-right: 2%;
+}
+.form-contact-valid {
+    background-color: hsl(123deg 69% 31% / 66%);
+    color: #fff;
+    height: 50px;
+}
+.form-contact-erreur {
+    background-color: #dc3546c5;
+    color: #fff;
+    height: 50px;
+}
+.contact-form i {
+    font-size : 300%;
+}
+/* 404
+-------------------------------------------------- */
+.erreur-404-header{
+    padding: 1%;
+}
+.erreur-404{
+    text-align: center;
+}
+.erreur-404 div h1{
+    font-size: 6em;
+    margin-top: 7%;
+}
+.erreur-404 div h2{
+    font-size: 1.8em;
+    margin: 2.5%;
+}
+@media only screen and (max-width: 900px){
+    .erreur-404{
+        font-size: 70%;
+    } 
+    .erreur-404 div h1{
+        font-size: 5.5em;
+    }
+}
+@media only screen and (max-width: 550px){
+    .erreur-404 {
+        font-size: 50%;
+    }
+}
+/* shop
+-------------------------------------------------- */
+/* product
+-------------------------------------------------- */
+.form-add-basket {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-around;
+    margin-bottom: 1.5rem;
+}
+.product-description {
+    padding: 3rem;
+}
+@media (max-width: 1100px){
+    .form-add-basket {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+@media (max-width: 500px){
+    .product-description {
+        padding: 1rem;
+    }
+}
+/* basket
+-------------------------------------------------- */
+/*pour le header voir css de "home"*/
+.basket-zone-1 {
+    width: 65%;
+    padding: 2%;
+}
+.basket-zone-1 .basket-full, .basket-zone-1 .basket-empty {
+    border-top: 2px solid black;
+}
+.basket-zone-1 .basket-product {
+    max-height: 600px;
+}
+.basket .card {
+    flex-direction: initial;
+    width: 75%;
+    margin: auto;
+    padding-bottom: 2%;
+    border: 0;
+}
+.basket .card-img-top {
+    width: 60%;
+    background-color: #000000;
+    border-radius: 0;
+}
+.basket .card-body {
+    width: 40%;
+}
+.basket .card button {
+    margin-top: 1rem;
+}
+.btn-full-2 {
+    width: 300px;
+    border-radius: 1.5rem;
+}
+
+.basket-zone-2{
+    width: 35%;
+    background-color: #ececec
+}
+.basket-zone-2 table{
+    width: 90%;
+    margin: 5%;
+}
+.table-detail{
+    font-size: 0.7em;
+    text-align: center;
+    margin-top: -3%;
+    margin-bottom: 10%;
+}
+.basket-zone-2 .basket-full, .basket-zone-2 .basket-empty {
+    margin: 5%;
+    border-top: 2px solid black;
+}
+.basket-service{
+    margin: 10%;
+    border: 3px solid black;
+    border-radius: 10px;
+}
+@media (max-width: 1100px) {
+    .basket .card {
+        width: 100%;
+    }
+}
+@media (max-width: 1000px) {
+    .basket-zone-2 .basket-full button {
+        width: 240px;
+    }
+    .basket-service {
+        margin: 2%;
+        font-size: 0.9em;
+        border: 2px solid black;
+    }
+}
+@media (max-width: 800px) {
+    .basket-zone-1 h2 {
+        margin: 3%;
+    }
+    .basket-zone-2 .basket-full button {
+        width: 200px;
+        font-size: 0.9em;
+    }
+    .basket-service {
+        font-size: 0.8em;
+    }
+    .basket-service h5 {
+        font-size: 1.2em;
+    }
+}
+@media (max-width: 700px) {
+    .basket-zone-2 .basket-full button {
+        width: 130px;
+        font-size: 0.8em;
+    }
+}
+@media (max-width: 650px) {
+    .basket-div {
+        flex-direction: column;
+    }
+    .basket-zone-1, .basket-zone-2 {
+        width: 100%;
+    }
+    .basket .card {
+        width: 90%;
+    }
+    .basket-zone-2 {
+        background-color: #ffff;
+    }
+    .basket-zone-2 .basket-empty, .basket-zone-2 .basket-full {
+        display: none;
+    }
+    .basket-service {
+        margin: 10%;
+    }
+}
+@media (max-width: 450px) {
+    .basket .card { 
+        font-size: 0.9em;
+    }
+    .basket .card label, .basket .card button { 
+        font-size: 0.8em;
+    }
+    .basket .card button { 
+        margin-top: 0.2rem;
+    }
+    .basket .card-text { 
+        margin-bottom: 0.2rem;
+    }
+}
+@media (max-width: 350px) { 
+    .basket-zone-1 h2 {
+        margin: 5%;
+    }
+}
+/* payment
+-------------------------------------------------- */
+/*pour le header voir css de "home"; pour "basket-service" voir le css de "basket"*/
+header .bi-telephone {
+    margin-left: 1rem;
+}
+.payment-zone-1 {
+    width: 65%;
+    padding: 2%;
+}
+.payment-detail {
+    font-size: 0.8em;
+}
+.credit-hidden, .paypal-hidden {
+    display: none;
+}
+
+.payment-zone-2{
+    width: 35%;
+    padding-top: 3%;
+    background-color: #ececec
+}
+.payment-zone-2 .basket-product{
+    max-height: 500px;
+    margin: 2%;
+    background: white;
+    border: 10px solid white;
+    border-radius: 10px;
+    overflow: scroll;
+}
+.payment .card {
+    flex-direction: initial;
+    padding-bottom: 2%;
+    border: 0;
+}
+.payment .card-img-top {
+    width: 60%;
+    background-color: #000000;
+    border-radius: 0;
+}
+.payment .card-body {
+    width: 40%;
+}
+.payment .card button {
+    margin-top: 1rem;
+}
+.payment-zone-2 table{
+    width: 90%;
+    margin: 5%;
+}
+.payment-detail{
+    font-size: 0.7em;
+    text-align: center;
+    margin-bottom: 10%;
+}
+@media (max-width: 1150px) { 
+    .payment-zone-1 {
+        width: 55%;
+    }
+    .payment-zone-2 {
+        width: 45%;
+    }
+}
+@media (max-width: 1000px) {
+    .payment-div {
+        flex-direction: column;
+    }
+    .payment-zone-1, .payment-zone-2 {
+        width: 100%;
+    }
+    .payment-zone-2 {
+        background-color: #ffff;
+    }
+    .payment-zone-2 .basket-product{
+        padding: 3%;
+        border: 1.5px solid black;
+    }
+}
+@media (max-width: 600px) { 
+    .payment-zone-1 {
+       margin-top: 3%;
+    }
+}
+/* valid
+-------------------------------------------------- */
+.valid {
+    background-color: #198653a8;
+}
+.valid table {
+    border: 1.5px solid;
+}
+.valid p {
+    margin: 2%;
+}
+@media (max-width: 600px) { 
+    .valid td,.valid th,.valid tr {
+        display: block;
+    }
+}
+/* refused
+-------------------------------------------------- */
+.refused {
+    background-color: #dc3546c5;
+}
+.refused p {
+    margin: 2%;
+}
+.refused button {
+    width: 250px;
+}
+
+/* admin
+-------------------------------------------------- 
+-------------------------------------------------- 
+-------------------------------------------------- */
+/* signin (Bootstrap)
+-------------------------------------------------- */
+.form-signin {
+max-width: 330px;
+padding: 15px;
+}
+.form-signin .form-floating:focus-within {
+z-index: 2;
+}
+.form-signin input[type="text"] {
+margin-bottom: -1px;
+border-bottom-right-radius: 0;
+border-bottom-left-radius: 0;
+}
+.form-signin input[type="password"] {
+margin-bottom: 10px;
+border-top-left-radius: 0;
+border-top-right-radius: 0;
+}
+/* dashboard
+-------------------------------------------------- */
+.dashboard-product {
+    display: flex;
+}
+@media (max-width: 1000px) { 
+    .dashboard-product {
+        flex-direction: column;
+    }
+}
+/* support
+-------------------------------------------------- */
+/* order 
+-------------------------------------------------- */
+.order{
+padding: 2%;
+}
+.order tbody {
+height: 250px;
+display: block;
+overflow-y: scroll;
+}
+/* edit (affichage du rendu sur about.edit style de css about aussi)
+-------------------------------------------------- */
+.requete-valid {
+    background-color: hsla(152, 69%, 31%, 0.659);
+    color: #fff;
+    height: 50px;
+}
+
+
