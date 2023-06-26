@@ -63,21 +63,16 @@ $data = array();
           <div class="d-flex flex-column align-items-center justify-content-center mx-auto">
             <table class="table table-striped-columns">
             <?php
-              while($line_product = $result_product->fetch_assoc())
-              {
+              while($line_product = $result_product->fetch_assoc()) {
                 $result_retailOrder = executeQuery("SELECT `idProduct`, SUM(`quantity`) AS `total_quantity`, SUM(`price` * `quantity`) AS `total_price` FROM `retailOrder` WHERE `idProduct` = {$line_product['idProduct']} GROUP BY `idProduct`");
-                if($line_retailOrder = $result_retailOrder->fetch_assoc())
-                {
+                if($line_retailOrder = $result_retailOrder->fetch_assoc()) {
                   $product_data = array('name' => $line_product['name'], 'quantity' => $line_retailOrder['total_quantity'], 'revenue' => $line_retailOrder['total_price']);
-                }
-                else
-                {
+                } else {
                   $product_data = array('name' => $line_product['name'], 'quantity' => 0, 'revenue' => 0);
                 }
                 $data[] = $product_data;
               }
-              foreach($data as $product_data)
-              {
+              foreach($data as $product_data) {
                 echo "<tr>";
                 echo "<td>{$product_data['name']}</td>";
                 echo "<td>{$product_data['quantity']} unités vendues</td>";

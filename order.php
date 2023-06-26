@@ -12,8 +12,7 @@ $total_order = $num_waiting + $num_transit + $num_finish;
 $waiting_order = $result_waiting->fetch_assoc();
 $transit_order = $result_transit->fetch_assoc();
 $headers = 'From: admin001@projet-afci-ecommerce-leo.fr' . "\r\n";
-if(isset($_POST['submit-waiting']) && isset($_POST['id-waiting']))
-{
+if(isset($_POST['submit-waiting']) && isset($_POST['id-waiting'])) {
     $trackingNumber = $_POST['trackingNumber'];
     $id_waiting = $_POST['id-waiting'];
     executeQuery("UPDATE `order` SET `statusDelivery` = 'En transit', `trackingNumber` = '$trackingNumber' WHERE `idOrder` = $id_waiting");
@@ -21,8 +20,7 @@ if(isset($_POST['submit-waiting']) && isset($_POST['id-waiting']))
     mail($waiting_customer['email'], "Confirmation d'envoi", $message, $headers);    
 }
 
-if(isset($_POST['submit-transit']) && isset($_POST['id-transit']))
-{
+if(isset($_POST['submit-transit']) && isset($_POST['id-transit'])) {
     $trackingNumber = $_POST['trackingNumber'];
     $id_transit = $_POST['id-transit'];
     executeQuery("UPDATE `order` SET `statusDelivery` = 'Terminer' WHERE `idOrder` = $id_transit");
