@@ -2,18 +2,34 @@
 -------------------------------------------------- 
 -------------------------------------------------- 
 -------------------------------------------------- */
-a{
+a {
     color: black;
     text-decoration: none;
 }
-.hidden{
+.hidden { 
     display: none;
 }
-.banner{
+.banner {
     margin-top: 2%;
     padding: 0.5%;
     background-color: #787878;
     text-align: center;
+}
+.btn-basket {
+    width: 300px;
+}
+.text-selected {
+    color : #FFFFFF80;
+}
+.requete-valid {
+    background-color: #19861ea8;
+    color: #fff;
+    height: 50px;
+} 
+.form-contact-error {
+    background-color: #dc3546c5;
+    color: #fff;
+    height: 50px;
 }
 @media (max-width: 770px) {
     .banner {
@@ -43,13 +59,11 @@ header {
     border-color: #fff;
     box-shadow: 0 0 0 .25rem rgba(255, 255, 255, .25);
 }
-.container img {
+.header img {
     width: 55%;
 }
-.bi-basket {
+.header .bi-basket {
     margin-left: 2%;
-}
-.bi-search, .bi-basket{
     font-size: 127%;
     cursor: pointer;
 }
@@ -72,15 +86,19 @@ header {
     color: white;
     background-color: #44566c;
 }
-.basket-product {
+.offcanvas .basket-product {
+    max-height: 250px;
     overflow: scroll;
+    margin: 1rem;
+    border: 1px solid black;
 }
-.btn-full-1 {
-    width: 250px;
+.offcanvas .basket-product button{
+    border: none;
+    background-color: transparent;
 }
 /* footer
 -------------------------------------------------- */
-footer{
+footer {
     padding: 2rem;
     color: white;
     background-color: #2f435e;
@@ -91,10 +109,10 @@ footer div {
 footer img {
     width: 45%;
 }
-.footer-zone{
+.footer-zone {
     width: 50%;
 }
-.footer-zone a{
+.footer-zone a {
     margin: 1.5%;
 }
 @media (max-width: 450px) {
@@ -117,24 +135,12 @@ position: fixed;
 top: 0;
 bottom: 0;
 left: 0;
-z-index: 100; /* Behind the navbar */
-padding: 0 0 0; /* Height of navbar */ /*modif léo*/
+z-index: 100; 
+padding: 0 0 0;
 box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
 }
-@media (max-width: 768px) { /*ajout perso pour responsive*/
-    .sidebar {
-        position: initial;
-    }
-    .sidebar hr.mb-5 {
-        margin-bottom: 0; /*!!!!!!!!!!!!!!!!!!!!!!!!!!! ne marche pas*/
-    }
-    .sidebar .nav {
-        flex-direction: initial; /*!!!!!!!!!!!!!!!!!!!!!!!!!!! ne marche pas*/
-        justify-content: center;
-    }
-}
 .sidebar .nav { 
-    flex-direction: column;/*!!!!!!!!!!!!!!!!!!!!!!!!!!! ne marche pas*/
+    flex-direction: column;
 }
 .sidebar .nav-link {
 font-weight: 500;
@@ -154,6 +160,15 @@ color: inherit;
 .sidebar-heading {
 font-size: .75rem;
 }
+@media (max-width: 768px) { 
+    .sidebar {
+        position: initial;
+    }
+    .sidebar .nav {
+        flex-direction: initial;
+        justify-content: center;
+    }
+}
 
 /* public
 -------------------------------------------------- 
@@ -164,19 +179,19 @@ font-size: .75rem;
 .carousel {
     margin-bottom: 4rem;
 }
-.carousel-caption {/* Since positioning the image, we need to help out the caption */
+.carousel-caption {
     bottom: 3rem;
     z-index: 10;
     display: flex;
     text-align: end;
 }
-.carousel-caption div{
+.carousel-caption div {
     width: 50%;
 }
-.carousel-item {/* Declare heights because of positioning of img element */
+.carousel-item {
     height: 27rem;
 }
-.marketing .col-lg-4 {/* Center align the text within the three columns below the carousel */
+.marketing .col-lg-4 {
     margin-bottom: 1.5rem;
     text-align: center;
 }
@@ -187,17 +202,20 @@ font-size: .75rem;
 .marketing h1 { 
     margin-bottom: 3rem;
 }
-.featurette-divider {/* Space out the Bootstrap <hr> more */
+.featurette-divider {
     margin: 3rem 0; 
 }
-.featurette-heading {/* Thin out the marketing headings */
+.featurette-heading {
     letter-spacing: -.05rem;
 }
-.featurette .col-md-7 {/*ajout perso pour placer les textes a droite*/
+.featurette .col-md-7 {
     width: 100%;
 }
+.bestsellers-sentence {
+    height: 100px;
+}
 @media (min-width: 40em) {
-    .carousel-caption p {/* Bump up size of carousel content */
+    .carousel-caption p {
         margin-bottom: 1.25rem;
         font-size: 1.25rem;
         line-height: 1.4;
@@ -211,7 +229,7 @@ font-size: .75rem;
         flex-direction: column;
         text-align: center;
     }
-    .carousel-caption div{
+    .carousel-caption div {
         width: 100%;
     }
     .carousel-item {
@@ -224,7 +242,7 @@ font-size: .75rem;
     margin: 2.5%;
 }
 @media (max-width: 325px) {
-    .about-div p, .about-div h3{
+    .about-div p, .about-div h3 {
         margin: 5%;
     }
 }
@@ -242,7 +260,7 @@ font-size: .75rem;
 .legal-obligations-menu ul {
     margin-top: 2rem;
 }
-.legal-obligations-description {
+.obligations .legal-obligations-description {
     width: 75%;
     padding: 1rem;
     overflow: scroll;
@@ -290,12 +308,12 @@ font-size: .75rem;
 .delivery-zone h3 {
     padding: 2.5%;
 }
-.delivery-titre {
+.delivery-title {
     font-weight: 600;
 }
 /* contact
 -------------------------------------------------- */
-.contact .banner{
+.contact .banner {
     margin-bottom: 4%;
 }
 .contact-detail-1 {
@@ -324,50 +342,48 @@ font-size: .75rem;
     font-size: 270%;
     margin-right: 2%;
 }
-.form-contact-valid {
-    background-color: hsl(123deg 69% 31% / 66%);
-    color: #fff;
-    height: 50px;
-}
-.form-contact-erreur {
-    background-color: #dc3546c5;
-    color: #fff;
-    height: 50px;
-}
 .contact-form i {
     font-size : 300%;
 }
 /* 404
 -------------------------------------------------- */
-.erreur-404-header{
+.error-404-header {
     padding: 1%;
 }
-.erreur-404{
+.error-404 {
     text-align: center;
 }
-.erreur-404 div h1{
+.error-404 div h1 {
     font-size: 6em;
     margin-top: 7%;
 }
-.erreur-404 div h2{
+.error-404 div h2 {
     font-size: 1.8em;
     margin: 2.5%;
 }
-@media only screen and (max-width: 900px){
-    .erreur-404{
+@media (max-width: 900px) {
+    .error-404 {
         font-size: 70%;
     } 
-    .erreur-404 div h1{
+    .error-404 div h1 {
         font-size: 5.5em;
     }
 }
-@media only screen and (max-width: 550px){
+@media (max-width: 550px) {
     .erreur-404 {
         font-size: 50%;
     }
 }
 /* shop
 -------------------------------------------------- */
+.shop .form-select {
+    width: 15%;
+}
+@media (max-width: 600px) {
+    .shop .form-select {
+        width: 40%;
+    }
+}
 /* product
 -------------------------------------------------- */
 .form-add-basket {
@@ -379,15 +395,16 @@ font-size: .75rem;
 .product-description {
     padding: 3rem;
 }
-@media (max-width: 1100px){
+@media (max-width: 1100px) {
     .form-add-basket {
         flex-direction: column;
         align-items: center;
+        margin-top: 1.5rem;
     }
 }
-@media (max-width: 500px){
-    .product-description {
-        padding: 1rem;
+@media (max-width: 767px) {
+    .product-description h1, .product-description h4 {
+        text-align: center;
     }
 }
 /* basket
@@ -400,8 +417,9 @@ font-size: .75rem;
 .basket-zone-1 .basket-full, .basket-zone-1 .basket-empty {
     border-top: 2px solid black;
 }
-.basket-zone-1 .basket-product {
-    max-height: 600px;
+.basket-zone-1 .basket-product button{
+    border: none;
+    background-color: transparent;
 }
 .basket .card {
     flex-direction: initial;
@@ -410,49 +428,28 @@ font-size: .75rem;
     padding-bottom: 2%;
     border: 0;
 }
-.basket .card-img-top {
-    width: 60%;
-    background-color: #000000;
-    border-radius: 0;
-}
-.basket .card-body {
-    width: 40%;
-}
-.basket .card button {
-    margin-top: 1rem;
-}
-.btn-full-2 {
-    width: 300px;
-    border-radius: 1.5rem;
-}
-
-.basket-zone-2{
+.basket-zone-2 {
     width: 35%;
     background-color: #ececec
 }
-.basket-zone-2 table{
+.basket-zone-2 table {
     width: 90%;
     margin: 5%;
 }
-.table-detail{
+.table-detail {
     font-size: 0.7em;
     text-align: center;
     margin-top: -3%;
     margin-bottom: 10%;
 }
-.basket-zone-2 .basket-full, .basket-zone-2 .basket-empty {
+.basket-zone-2 .basket-full {
     margin: 5%;
     border-top: 2px solid black;
 }
-.basket-service{
+.basket-service {
     margin: 10%;
     border: 3px solid black;
     border-radius: 10px;
-}
-@media (max-width: 1100px) {
-    .basket .card {
-        width: 100%;
-    }
 }
 @media (max-width: 1000px) {
     .basket-zone-2 .basket-full button {
@@ -527,54 +524,44 @@ font-size: .75rem;
 /* payment
 -------------------------------------------------- */
 /*pour le header voir css de "home"; pour "basket-service" voir le css de "basket"*/
-header .bi-telephone {
+.header-payment .bi-telephone, .header-payment .bi-basket {
     margin-left: 1rem;
 }
 .payment-zone-1 {
     width: 65%;
     padding: 2%;
 }
-.payment-detail {
-    font-size: 0.8em;
-}
 .credit-hidden, .paypal-hidden {
     display: none;
 }
-
-.payment-zone-2{
+.payment-zone-2 {
     width: 35%;
     padding-top: 3%;
     background-color: #ececec
 }
-.payment-zone-2 .basket-product{
+.payment-zone-2 .basket-product {
     max-height: 500px;
-    margin: 2%;
-    background: white;
-    border: 10px solid white;
-    border-radius: 10px;
     overflow: scroll;
+    border: 2px solid black;
+    border-radius: 15px;
+    margin: 2%;
+    background-color: white;
 }
 .payment .card {
     flex-direction: initial;
+    width: 75%;
+    margin: auto;
     padding-bottom: 2%;
     border: 0;
-}
-.payment .card-img-top {
-    width: 60%;
-    background-color: #000000;
-    border-radius: 0;
-}
-.payment .card-body {
-    width: 40%;
 }
 .payment .card button {
     margin-top: 1rem;
 }
-.payment-zone-2 table{
+.payment-zone-2 table {
     width: 90%;
     margin: 5%;
 }
-.payment-detail{
+.payment-retail {
     font-size: 0.7em;
     text-align: center;
     margin-bottom: 10%;
@@ -597,7 +584,7 @@ header .bi-telephone {
     .payment-zone-2 {
         background-color: #ffff;
     }
-    .payment-zone-2 .basket-product{
+    .payment-zone-2 .basket-product {
         padding: 3%;
         border: 1.5px solid black;
     }
@@ -607,6 +594,12 @@ header .bi-telephone {
        margin-top: 3%;
     }
 }
+@media (max-width: 400px) {
+    .payment .card {
+        width: 100%;
+    }
+}
+
 /* valid
 -------------------------------------------------- */
 .valid {
@@ -668,11 +661,14 @@ border-top-right-radius: 0;
         flex-direction: column;
     }
 }
+.table-transactions {
+    max-height: 300px;
+}
 /* support
 -------------------------------------------------- */
 /* order 
 -------------------------------------------------- */
-.order{
+.order {
 padding: 2%;
 }
 .order tbody {
@@ -680,12 +676,10 @@ height: 250px;
 display: block;
 overflow-y: scroll;
 }
-/* edit (affichage du rendu sur about.edit style de css about aussi)
--------------------------------------------------- */
-.requete-valid {
-    background-color: hsla(152, 69%, 31%, 0.659);
-    color: #fff;
-    height: 50px;
+.table-order {
+    max-height: 400px;
 }
+/* edit 
+-------------------------------------------------- */
 
 

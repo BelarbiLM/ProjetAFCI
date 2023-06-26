@@ -1,238 +1,113 @@
-<?php include 'inc/init.inc.php'; ?>
-<?php include 'inc/head.inc.php'; ?>
-<?php include 'inc/nav.inc.php'; ?>
-
-  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">  
-    <h1 class="h2">Chiffre d'affaire</h1>
-    <div class="btn-toolbar mb-2 mb-md-0">
-      <div class="input-group">
-        <span class="input-group-text" id="basic-addon1"><i class="bi bi-calendar4"></i></span>
-        <select class="form-select" aria-label="Default select example">
-          <option value="1">January</option>
-          <option value="2">February</option>
-          <option value="3">March</option>
-          <option value="4">May</option>
-          <option value="5">June</option>
-          <option value="6">July</option>
-          <option value="7">August</option>
-          <option value="8">September</option>
-          <option value="9">October</option>
-          <option value="10">November</option>
-          <option value="11">December</option>
-        </select>
-      </div>    
+<?php 
+include 'inc/init.inc.php';
+include 'inc/head.inc.php';
+include 'inc/nav.inc.php'; 
+$result_order = executeQuery("SELECT * FROM `order`");
+$result_product = executeQuery("SELECT * FROM `products`");
+$data = array();
+?>
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+          <h1 class="h2">Chiffre d'affaire</h1>
+          <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="input-group">
+              <span class="input-group-text">
+                <i class="bi bi-calendar4"></i>
+              </span>
+              <select class="form-select">
+                <option value="1">January</option>
+                <option value="2">February</option>
+                <option value="3">March</option>
+                <option value="4">May</option>
+                <option value="5">June</option>
+                <option value="6">July</option>
+                <option value="7">August</option>
+                <option value="8">September</option>
+                <option value="9">October</option>
+                <option value="10">November</option>
+                <option value="11">December</option><!--ajouter une div pour le CA de l'année en cours -->
+              </select>
+            </div>    
+          </div>
+        </div>
+        <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
+        <h2 class="border-bottom">Transactions</h2>
+        <div class="table-responsive table-transactions">
+          <table class="table table-striped table-sm">
+            <thead>
+              <tr>
+                <th scope="col" class='text-center'>Commandes</th>
+                <th scope="col" class='text-center'>Montant</th>
+                <th scope="col" class='text-center'>Type de paiement</th>
+                <th scope="col" class='text-center'>Date</th>
+                <th scope="col" class='text-center'>Référence de la transaction</th>
+              </tr>
+            </thead>
+            <tbody>
+            <?php
+              while($line_order = $result_order->fetch_assoc())
+              {
+                echo "<tr>
+                        <td class='text-center'>{$line_order['idOrder']}</td>
+                        <td class='text-center'>{$line_order['amount']}</td>
+                        <td class='text-center'>-</td>
+                        <td class='text-center'>{$line_order['dateOrder']}</td>
+                        <td class='text-center'>-</td>
+                      </tr>";
+              }
+            ?>
+            </tbody>
+          </table>
+        </div>
+        <hr>
+        <div class="dashboard-product">
+          <div class="d-flex flex-column align-items-center justify-content-center mx-auto">
+            <table class="table table-striped-columns">
+            <?php
+              while($line_product = $result_product->fetch_assoc())
+              {
+                $result_retailOrder = executeQuery("SELECT `idProduct`, SUM(`quantity`) AS `total_quantity`, SUM(`price` * `quantity`) AS `total_price` FROM `retailOrder` WHERE `idProduct` = {$line_product['idProduct']} GROUP BY `idProduct`");
+                if($line_retailOrder = $result_retailOrder->fetch_assoc())
+                {
+                  $product_data = array('name' => $line_product['name'], 'quantity' => $line_retailOrder['total_quantity'], 'revenue' => $line_retailOrder['total_price']);
+                }
+                else
+                {
+                  $product_data = array('name' => $line_product['name'], 'quantity' => 0, 'revenue' => 0);
+                }
+                $data[] = $product_data;
+              }
+              foreach($data as $product_data)
+              {
+                echo "<tr>";
+                echo "<td>{$product_data['name']}</td>";
+                echo "<td>{$product_data['quantity']} unités vendues</td>";
+                echo "<td>{$product_data['revenue']} € de revenues total</td>";
+                echo "</tr>";
+              }
+            ?>
+            </table>
+          </div>
+          <div class="d-flex flex-column align-items-center justify-content-center mx-auto">
+              <canvas id="myChart2" width="300" height="300"></canvas>
+          </div>
+        </div> 
+      </main>
     </div>
   </div>
-
-  <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
-
-  <h2 class="border-bottom">Transactions</h2>
-  <div class="table-responsive">
-    <table class="table table-striped table-sm">
-      <thead>
-        <tr>
-          <th scope="col">Commandes</th>
-          <th scope="col">Montant</th>
-          <th scope="col">Type de paiement</th>
-          <th scope="col">Date</th>
-          <th scope="col">Référence de la transaction</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>1</td>
-          <td>00,00€</td>
-          <td>Paypal</td>
-          <td>00/00/0000 00:00</td>
-          <td>ABCD1234</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>00,00€</td>
-          <td>Visa</td>
-          <td>00/00/0000 00:00</td>
-          <td>ABCD1234</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td>00,00€</td>
-          <td>Mastercard</td>
-          <td>00/00/0000 00:00</td>
-          <td>ABCD1234</td>
-        </tr>
-        <tr>
-          <td>4</td>
-          <td>00,00€</td>
-          <td>Visa</td>
-          <td>00/00/0000 00:00</td>
-          <td>ABCD1234</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <hr>
-
-  <div class="dashboard-product">
-    <div class="d-flex flex-column align-items-center justify-content-center mx-auto">
-      <table class="table table-striped-columns">
-        <tr>
-          <td>Nom du produit 1</td>
-          <td>0 ventes</td>
-          <td>00,00€ total</td>
-        </tr>
-        <tr>
-          <td>Nom du produit 2</td>
-          <td>0 ventes</td>
-          <td>00,00€ total</td>
-        </tr>
-        <tr>
-          <td>Nom du produit 3</td>
-          <td>0 ventes</td>
-          <td>00,00€ total</td>
-        </tr>
-        <tr>
-          <td>Nom du produit 4</td>
-          <td>0 ventes</td>
-          <td>00,00€ total</td>
-        </tr>
-        <tr>
-          <td>Nom du produit 5</td>
-          <td>0 ventes</td>
-          <td>00,00€ total</td>
-        </tr>
-        <tr>
-          <td>Nom du produit 6</td>
-          <td>0 ventes</td>
-          <td>00,00€ total</td>
-        </tr>
-        <tr>
-          <td>Nom du produit 7</td>
-          <td>0 ventes</td>
-          <td>00,00€ total</td>
-        </tr>
-        <tr>
-          <td>Nom du produit 8</td>
-          <td>0 ventes</td>
-          <td>00,00€ total</td>
-        </tr>
-        <tr>
-          <td>Nom du produit 9</td>
-          <td>0 ventes</td>
-          <td>00,00€ total</td>
-        </tr>
-        <tr>
-          <td>Nom du produit 10</td>
-          <td>0 ventes</td>
-          <td>00,00€ total</td>
-        </tr>
-        <tr>
-          <td>Nom du produit 11</td>
-          <td>0 ventes</td>
-          <td>00,00€ total</td>
-        </tr>
-        <tr>
-          <td>Nom du produit 12</td>
-          <td>0 ventes</td>
-          <td>00,00€ total</td>
-        </tr>
-        <tr>
-          <td>Nom du produit 13</td>
-          <td>0 ventes</td>
-          <td>00,00€ total</td>
-        </tr>
-        <tr>
-          <td>Nom du produit 14</td>
-          <td>0 ventes</td>
-          <td>00,00€ total</td>
-        </tr>
-      </table>
-    </div>
-    <div class="d-flex flex-column align-items-center justify-content-center mx-auto">
-      <canvas id="myChart2" width="400" height="400"></canvas>
-    </div>
-  </div> 
-</main>
-</div>
-</div>
+</body>
 <script>
-//diagramme 1
 (() => {
-  'use strict'
+  'use strict';
 
-  feather.replace({ 'aria-hidden': 'true' })
+  feather.replace({ 'aria-hidden': 'true' });
 
-  const ctx = document.getElementById('myChart')
+  const ctx = document.getElementById('myChart');
   const myChart = new Chart(ctx, {
     type: 'line',
     data: {
-      labels: [
-        '1',
-        '2',
-        '3',
-        '4',
-        '5',
-        '6',
-        '7',
-        '8',
-        '9',
-        '10',
-        '11',
-        '12',
-        '13',
-        '14',
-        '15',
-        '16',
-        '17',
-        '18',
-        '19',
-        '20',
-        '21',
-        '22',
-        '23',
-        '24',
-        '25',
-        '26',
-        '27',
-        '28',
-        '29',
-        '30',
-        '31'
-      ],
+      labels: [], 
       datasets: [{
-        data: [
-          1000,
-          1400,
-          1848,
-          2003,
-          2349,
-          2492,
-          1234,
-          700,
-          400,
-          848,
-          2203,
-          349,
-          492,
-          1234,
-          1200,
-          430,
-          898,
-          223,
-          2349,
-          2492,
-          1234,
-          1000,
-          1400,
-          1848,
-          203,
-          2349,
-          492,
-          234,
-          989,
-          2798,
-          3000
-        ],
+        data: [],
         lineTension: 0,
         backgroundColor: 'transparent',
         borderColor: '#007bff',
@@ -252,42 +127,70 @@
         display: false
       }
     }
-  })
-})()
+  });
 
-// diagramme 2
-var ctx = document.getElementById('myChart2').getContext('2d');
-var myChart2 = new Chart(ctx, {
-    type: 'pie',
-    data: {
-        labels: ['Nom du produit 1', 'Nom du produit 2', 'Nom du produit 3', 'Nom du produit 4', 'Nom du produit 5', 'Nom du produit 6', 'Nom du produit 7', 'Nom du produit 8', 'Nom du produit 9', 'Nom du produit 10', 'Nom du produit 11', 'Nom du produit 12', 'Nom du produit 13', 'Nom du produit 14'],
-        datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3, 7, 9, 12, 8, 14, 6, 1, 4],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.6)',
-                'rgba(54, 162, 235, 0.6)',
-                'rgba(255, 206, 86, 0.6)',
-                'rgba(75, 192, 192, 0.6)',
-                'rgba(153, 102, 255, 0.6)',
-                'rgba(255, 159, 64, 0.6)',
-                'rgba(255, 99, 132, 0.6)',
-                'rgba(54, 162, 235, 0.6)',
-                'rgba(255, 206, 86, 0.6)',
-                'rgba(75, 192, 192, 0.6)',
-                'rgba(153, 102, 255, 0.6)',
-                'rgba(255, 159, 64, 0.6)',
-                'rgba(255, 99, 132, 0.6)',
-                'rgba(54, 162, 235, 0.6)'
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-        responsive: false,
-        maintainAspectRatio: false
+  const select = document.querySelector('.form-select');
+  select.addEventListener('change', updateChart);
+  const currentMonth = new Date().getMonth() + 1; 
+  select.value = currentMonth;
+
+  updateChart();
+
+  function updateChart() {
+    const selectedMonth = select.value;
+    const daysInMonth = getDaysInMonth(selectedMonth);
+    const data = generateData(daysInMonth);
+    
+    myChart.data.labels = data.labels;
+    myChart.data.datasets[0].data = data.values;
+    myChart.update();
+  }
+
+  function getDaysInMonth(month) {
+    const monthIndex = parseInt(month) - 1;
+    const year = new Date().getFullYear();
+    const date = new Date(year, monthIndex, 1);
+    const daysInMonth = [];
+    
+    while (date.getMonth() === monthIndex) {
+      daysInMonth.push(date.getDate());
+      date.setDate(date.getDate() + 1);
     }
-});
+    
+    return daysInMonth;
+  }
+
+  function generateData(days) {
+    const values = [];
+    for (let i = 0; i < days.length; i++) {
+      values.push(Math.floor(Math.random() * 3000));
+    }
+    return {
+      labels: days.map(String),
+      values: values
+    };
+  }
+
+})();
+
+(() => {
+    var ctx = document.getElementById('myChart2').getContext('2d');
+    var myChart2 = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: [<?php foreach($data as $product_data){ echo "'" . $product_data['name'] . "', "; } ?>],
+            datasets: [{
+                label: '# of Votes',
+                data: [<?php foreach($data as $product_data){ echo $product_data['quantity'] . ", "; } ?>],
+                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40', '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40'],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: false,
+            maintainAspectRatio: false
+        }
+    });
+})();
 </script>
-</body>
 </html>

@@ -1,95 +1,93 @@
-<?php include 'inc/init.inc.php'; ?>
-<?php include 'inc/head.inc.php'; ?>
-<?php include 'inc/header.inc.php'; ?>
+<?php 
+include 'inc/init.inc.php';
+include 'inc/head.inc.php';
+include 'inc/header.inc.php';
 
-<main>
-  <div class='container py-4 my-5'>
-    <a href='boutique.php' class='link-dark'>Retour vers la boutique</a>
-    <div class='row align-items-md-stretch mt-5'>
-      <div class='col-md-6'>
-        <div class='h-100 p-5 border rounded-3'>
-          <div><img src='' width='150' height='150'></div>
-        </div>
-      </div>
-      <div class='col-md-6'>
-        <div class='h-100 p-5 rounded-3'>
-          <h1 class='mb-4'>Nom du produit</h1>
-          <h4 class='mb-5'>Phrase enjolivante et adjéctiver du produit</h4>
-          <ul class='mb-5'>
-            <li>Point fort 1</li>
-            <li>Point fort 2</li>
-            <li>Point fort 3</li>
-            <li>Point fort 4</li>
-          </ul>
+if(isset($_GET['idProduct'])) 
+{
+  $result = executeQuery("SELECT * FROM `products` WHERE `idProduct` = {$_GET['idProduct']}"); 
+} 
 
-          <div class="stock-full">
-            <i>Nombre de produit(s) disponible : ?</i>
-            <form method="post" id="form-add-basket">
-              <div class="form-add-basket">
-                <p>Prix du produit en €</p>
-                <div>
-                  <label for="quantity">Quantité : </label>
-                  <select id="quantity" name="quantity" class="ms-1">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                  </select>
+if($result->num_rows <= 0) 
+{ 
+  header("location:shop.php"); 
+  exit(); 
+}
+$product = $result->fetch_assoc();
+$suggestion = executeQuery("SELECT * FROM `products` ORDER BY RAND() LIMIT 3;"); 
+
+$content .="<main class='product'>";
+$content .="<div class='container py-4 my-5'>";
+$content .="<a href='" . RACINE_SITE . "shop.php' class='link-dark'><i class='bi bi-arrow-return-left mx-2'></i>Retour dans la boutique</a>";
+$content .="<div class='row align-items-md-stretch mt-5'>";
+$content .="<div class='col-md-6'><div class='h-100 p-5 border rounded-3'><div><img src='{$product['photo']}' width='100%' height='100%'></div></div></div>";
+$content .="<div class='col-md-6'><div class='h-100 p-5 rounded-3 product-description'>";
+$content .="<h1 class='mb-4'>{$product['name']}</h1>";
+$content .="<h4 class='mb-5'>{$product['sentence']}</h4>";
+$content .="<ul class='mb-5'>";
+if (!empty($product['strongPoint1'])) {$content .="<li>$product[strongPoint1]</li>";}
+if (!empty($product['strongPoint2'])) {$content .="<li>$product[strongPoint2]</li>";}
+if (!empty($product['strongPoint3'])) {$content .="<li>$product[strongPoint3]</li>";}
+if (!empty($product['strongPoint4'])) {$content .="<li>$product[strongPoint4]</li>";}
+$content .="</ul>";
+
+if($product['stock'] > 0)
+{
+          $content .= "<i>Nombre de produit(s) disponible : {$product['stock']} </i>"; 
+          $content .= '<form method="post"><div class="form-add-basket">';
+            $content .= "<input type='hidden' name='idProduct' value='{$product['idProduct']}'>"; 
+            $content .= "<p>{$product['price']} €</p>";
+            $content .= '<div>';
+              $content .= '<label for="quantity">Quantité : </label>';
+              $content .= '<select id="quantity" name="quantity" class="ms-1">';
+              for($i = 1; $i <= $product['stock'] && $i <= $product['stock']; $i++)
+                {
+                  $content .= "<option>$i</option>";
+                }
+              $content .= '</select>';
+            $content .= '</div>';
+            $content .= '<button type="submit" name="add-basket" class="btn btn-outline-success mt-3">Ajouter au panier</button>';
+          $content .= '</div></form>'; 
+}
+else
+{
+        $content .= '<div class="h3 text-center text-danger"><ins>Rupture de stock !</ins></div>
+                    <div class="text-center text-danger mb-5">Pour plus d\'informations sur la disponibilités d\'un produit veuillez contactez le <a href="' . RACINE_SITE . '/contact.php" class="text-danger">Service Client</a></div>';
+}
+        $content .= "<ul>
+                      <li class='text-success'>Livraison Standard gratuite</li>
+                      <li class='text-success'>Paiement CB ou Paypal</li>
+                      <li class='text-success'>Expédition dans les 24h de la commande (jours ouvrés)</li>
+                      </ul>
+                    </div>
+                  </div>
                 </div>
-                <button type="submit" name="add-basket" class="btn btn-outline-success mt-3">Ajouter au panier</button>
-              </div>
-            </form>
-          </div>
-        
-          <div class="stock-empty hidden">
-            <div class="h3 text-center text-danger"><ins>Rupture de stock !</ins></div>
-            <div class="text-center text-danger mb-5">Pour plus d\'informations sur la disponibilités d\'un produit veuillez contactez le <a href="' . RACINE_SITE . '/contact.php" class="text-danger">Service Client</a></div>
-          </div>
+                <div class='product-description mb-4 rounded-3'>
+                  <div class='container-fluid py-5'>
+                    <p>{$product['text1']}</p>
+                    <p>{$product['text2']}</p>
+                    <p>{$product['text3']}</p>
+                    <p>{$product['text4']}</p>
+                    <p>{$product['text5']}</p>
+                    <p>{$product['text6']}</p>
+                  </div>
+                </div>
+                <div class='album py-5 bg-light'><div class='container'><h3 class='text-center text-decoration-underline'>Suggestion de produit :</h3><div class='row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3'>";
+                while($product_suggestion = $suggestion->fetch_assoc())
+                {
+                  $content .= "<div class='col'>
+                                <div class='card shadow-sm'>
+                                  <div class='bd-placeholder-img card-img-top' width='100%' height='225'><a class='text-decoration-none text-black' href='product.php?idProduct={$product_suggestion['idProduct']}'><img src={$product_suggestion['photo']} width='80%' height='80%' class='mt-3 m-auto d-flex'></div>
+                                  <div class='card-body text-center'>
+                                    <p class='card-text'>{$product_suggestion['name']}</p></a>
+                                    <p class='card-text'>{$product_suggestion['price']} €</p>
+                                    <a href='product.php?idProduct={$product_suggestion['idProduct']}'><button type='submit' class='btn btn-outline-success mt-3'>Plus de détails</button></a>
+                                  </div></div></div>";
+                }
+  $content .= "</div></div></div></div></main>";
 
-          <ul>
-            <li class='text-success'>Livraison Standard gratuite</li>
-            <li class='text-success'>Paiement CB ou Paypal</li>
-            <li class='text-success'>Expédition dans les 24h de la commande (jours ouvrés)</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div class='product-description mb-4 rounded-3'>
-      <div class='container-fluid py-5'>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget semper turpis. Phasellus lorem eros, efficitur ut diam eu, tristique feugiat nisl. 
-        Nunc ligula lacus, faucibus in augue non, imperdiet interdum lorem. Vestibulum id aliquam diam. Etiam rhoncus finibus massa et rhoncus. 
-        Praesent justo eros, semper at nibh vitae, ornare eleifend libero. In massa ex, lacinia vitae nisl finibus, ultricies finibus lectus. 
-        Integer non tincidunt urna, eget placerat ante. Vestibulum sagittis faucibus nibh eget condimentum. Quisque viverra risus vitae eros ultrices, eu venenatis elit dictum. 
-        Maecenas quis elit neque. Quisque viverra ligula commodo, dictum libero ut, malesuada est. In vitae nunc in lacus feugiat congue eget vitae eros. 
-        Phasellus dictum arcu id nunc malesuada, ac consectetur velit ornare.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget semper turpis. Phasellus lorem eros, efficitur ut diam eu, tristique feugiat nisl. 
-        Nunc ligula lacus, faucibus in augue non, imperdiet interdum lorem. Vestibulum id aliquam diam. Etiam rhoncus finibus massa et rhoncus. 
-        Praesent justo eros, semper at nibh vitae, ornare eleifend libero. In massa ex, lacinia vitae nisl finibus, ultricies finibus lectus. 
-        Integer non tincidunt urna, eget placerat ante. Vestibulum sagittis faucibus nibh eget condimentum. Quisque viverra risus vitae eros ultrices, eu venenatis elit dictum. 
-        Maecenas quis elit neque. Quisque viverra ligula commodo, dictum libero ut, malesuada est. In vitae nunc in lacus feugiat congue eget vitae eros. 
-        Phasellus dictum arcu id nunc malesuada, ac consectetur velit ornare.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget semper turpis. Phasellus lorem eros, efficitur ut diam eu, tristique feugiat nisl. 
-        Nunc ligula lacus, faucibus in augue non, imperdiet interdum lorem. Vestibulum id aliquam diam. Etiam rhoncus finibus massa et rhoncus. 
-        Praesent justo eros, semper at nibh vitae, ornare eleifend libero. In massa ex, lacinia vitae nisl finibus, ultricies finibus lectus. 
-        Integer non tincidunt urna, eget placerat ante. Vestibulum sagittis faucibus nibh eget condimentum. Quisque viverra risus vitae eros ultrices, eu venenatis elit dictum. 
-        Maecenas quis elit neque. Quisque viverra ligula commodo, dictum libero ut, malesuada est. In vitae nunc in lacus feugiat congue eget vitae eros. 
-        Phasellus dictum arcu id nunc malesuada, ac consectetur velit ornare.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget semper turpis. Phasellus lorem eros, efficitur ut diam eu, tristique feugiat nisl. 
-        Nunc ligula lacus, faucibus in augue non, imperdiet interdum lorem. Vestibulum id aliquam diam. Etiam rhoncus finibus massa et rhoncus. 
-        Praesent justo eros, semper at nibh vitae, ornare eleifend libero. In massa ex, lacinia vitae nisl finibus, ultricies finibus lectus. 
-        Integer non tincidunt urna, eget placerat ante. Vestibulum sagittis faucibus nibh eget condimentum. Quisque viverra risus vitae eros ultrices, eu venenatis elit dictum. 
-        Maecenas quis elit neque. Quisque viverra ligula commodo, dictum libero ut, malesuada est. In vitae nunc in lacus feugiat congue eget vitae eros. 
-        Phasellus dictum arcu id nunc malesuada, ac consectetur velit ornare.
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget semper turpis. Phasellus lorem eros, efficitur ut diam eu, tristique feugiat nisl. 
-        Nunc ligula lacus, faucibus in augue non, imperdiet interdum lorem. Vestibulum id aliquam diam. Etiam rhoncus finibus massa et rhoncus. 
-        Praesent justo eros, semper at nibh vitae, ornare eleifend libero. In massa ex, lacinia vitae nisl finibus, ultricies finibus lectus. 
-        Integer non tincidunt urna, eget placerat ante. Vestibulum sagittis faucibus nibh eget condimentum. Quisque viverra risus vitae eros ultrices, eu venenatis elit dictum. 
-        Maecenas quis elit neque. Quisque viverra ligula commodo, dictum libero ut, malesuada est. In vitae nunc in lacus feugiat congue eget vitae eros. 
-        Phasellus dictum arcu id nunc malesuada, ac consectetur velit ornare.</p>
-      </div>
-    </div>
-  </div>
-</main>
 
-<?php include 'inc/footer.inc.php';?>
+
+echo $content;
+include 'inc/footer.inc.php';
+?>
